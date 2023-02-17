@@ -1,10 +1,14 @@
-package model
+package models
 
-import "encoding/json"
+import (
+	"encoding/json"
+	"gorm.io/gorm"
+)
 
 type Account struct {
-	Email         string `gorm:"primaryKey"`
-	User          *User  `gorm:"foreignKey:Email"`
+	gorm.Model
+	Email         string `gorm:"uniqueIndex; not null"`
+	User          *User  `gorm:"foreignKey:ID"`
 	Balance       uint64 `gorm:"default:0"`
 	AccountNumber string
 }

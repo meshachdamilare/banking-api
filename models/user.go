@@ -1,16 +1,16 @@
-package model
+package models
 
 import (
 	"encoding/json"
-	"time"
+	"gorm.io/gorm"
 )
 
 type User struct {
-	Email     string    `json:"email,omitempty" gorm:"primaryKey"`
-	Password  string    `json:"password,omitempty" gorm:"not null"`
-	Phone     string    `json:"phone,omitempty" gorm:"not null"`
-	DOB       string    `json:"dob,omitempty" gorm:"not null"`
-	Timestamp time.Time `json:"created_at"`
+	gorm.Model
+	Email    string `json:"email,omitempty" gorm:"not null;uniqueIndex"`
+	Password string `json:"password,omitempty" gorm:"not null"`
+	Phone    string `json:"phone,omitempty" gorm:"not null"`
+	DOB      string `json:"dob,omitempty" gorm:"not null"`
 }
 
 type UserAuth struct {
@@ -23,7 +23,7 @@ func (user *User) MarshalJSON() ([]byte, error) {
 		"email":      user.Email,
 		"phone":      user.Phone,
 		"dob":        user.DOB,
-		"created_at": user.Timestamp,
+		"created_at": user.CreatedAt, // got from gorm.Model
 	}
 
 	return json.Marshal(data)
