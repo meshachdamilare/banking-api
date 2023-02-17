@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+  banking-api:
+    build: .
+    container_name: banking-api-compose
+    volumes:
+      - .:/go/src/banking-api
+    ports:
+      - "8002:8080"
+
+    env_file:
+      - .env
+    depends_on:
+      - psql
+      - immudb
+
+  psql:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=banking-api
+    ports:
+      - "5430:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  immudb:
+    image: codenotary/immudb:latest
+    restart: always
+    environment:
+      - IMMUDB_ADDRESS=0.0.0.0
+      - IMMUDB_AUTH=true
+    ports:
+      - "3322:3322"
+
+volumes:
+  db_data:
+
