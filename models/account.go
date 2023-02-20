@@ -7,7 +7,7 @@ import (
 
 type Account struct {
 	gorm.Model
-	Email         string `gorm:"uniqueIndex; not null"`
+	Email         string `gorm:"uniqueIndex;not null"`
 	User          *User  `gorm:"foreignKey:ID"`
 	Balance       uint64 `gorm:"default:0"`
 	AccountNumber string
