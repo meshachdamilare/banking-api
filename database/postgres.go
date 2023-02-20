@@ -12,8 +12,9 @@ import (
 )
 
 var databaseURI string = fmt.Sprintf(
-	"host=%s user=%s password=%s dbname=%s",
+	"host=%s port=%s user=%s password=%s dbname=%s",
 	config.GetEnv("POSTGRES_HOSTNAME"),
+	config.GetEnv("POSTGRES_PORT"),
 	config.GetEnv("POSTGRES_USERNAME"),
 	config.GetEnv("POSTGRES_PASSWORD"),
 	config.GetEnv("POSTGRES_DATABASE"),
