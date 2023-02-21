@@ -12,12 +12,12 @@ import (
 )
 
 var databaseURI string = fmt.Sprintf(
-	"host=%s port=%s user=%s password=%s dbname=%s",
+	"host=%s user=%s password=%s dbname=%s port=%s",
 	config.GetEnv("POSTGRES_HOSTNAME"),
-	config.GetEnv("POSTGRES_PORT"),
 	config.GetEnv("POSTGRES_USERNAME"),
 	config.GetEnv("POSTGRES_PASSWORD"),
 	config.GetEnv("POSTGRES_DATABASE"),
+	config.GetEnv("POSTGRES_PORT"),
 )
 
 func hashPassword(password string) (string, error) {

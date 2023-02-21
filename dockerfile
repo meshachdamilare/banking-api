@@ -1,8 +1,8 @@
 FROM golang:1.19-alpine3.17
 
-WORKDIR go/src/banking-api
+COPY . /go/src/banking-api
 
-COPY . .
+WORKDIR go/src/banking-api
 
 COPY go.mod ./
 
@@ -10,4 +10,8 @@ RUN go mod download
 
 COPY . .
 
-CMD ["go", "run", "main.go"]
+RUN ["go", "get", "github.com/githubnemo/CompileDaemon"]
+
+RUN ["go", "install", "github.com/githubnemo/CompileDaemon"]
+
+ENTRYPOINT CompileDaemon -polling -log-prefix=false -build="go build main.go" -command="./main"

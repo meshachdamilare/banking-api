@@ -8,12 +8,11 @@ services:
       - .:/go/src/banking-api
     ports:
       - "8002:8080"
-
-    env_file:
-      - .env
     depends_on:
       - psql
       - immudb
+    networks:
+      - banking-api
 
   psql:
     image: postgres
@@ -26,6 +25,8 @@ services:
       - "5430:5432"
     volumes:
       - db_data:/var/lib/postgresql/data
+    networks:
+      - banking-api
 
   immudb:
     image: codenotary/immudb:latest
@@ -35,8 +36,14 @@ services:
       - IMMUDB_AUTH=true
     ports:
       - "3322:3322"
+    networks:
+      - banking-api
 
 volumes:
   db_data:
   #immudb_data:
+
+networks:
+  banking-api:
+    external: true
 
